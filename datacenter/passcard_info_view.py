@@ -16,9 +16,7 @@ def passcard_info_view(request, passcode):
         },
     ]
     for visit in all_visits:
-        if visit.leaved_at == None:
-            pass
-        else:
+        if visit.leaved_at is not None:
             time_spent = visit.leaved_at - visit.entered_at
         duration = format_duration(time_spent)
         time_spent_minutes = time_spent.total_seconds() // 60
