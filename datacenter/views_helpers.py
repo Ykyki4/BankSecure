@@ -1,8 +1,11 @@
 from django.utils.timezone import localtime
 
-def get_duration(enter_time):
+def get_duration(enter_time, leaved_at=None):
     time_current = localtime()
-    time_spent = time_current - enter_time
+    if leaved_at is not None:
+        time_spent = leaved_at - enter_time
+    else:
+        time_spent = time_current - enter_time
     return(time_spent)
 
 def format_duration(time_spent):
