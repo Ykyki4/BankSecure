@@ -1,16 +1,10 @@
-from datacenter.models import Passcard
 from datacenter.models import Visit
 from django.shortcuts import render
-from django.utils.timezone import localtime
 from datacenter.views_helpers import get_duration, format_duration, is_strange
 
 
-
-
-
-
 def storage_information_view(request):
-    visits = Visit.objects.filter(leaved_at=None)
+    visits = Visit.objects.filter(leaved_at__isnull=True)
     non_closed_visits = []
     for visit in visits:
         enter_time = visit.entered_at
