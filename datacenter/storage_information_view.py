@@ -9,15 +9,13 @@ def storage_information_view(request):
     for visit in visits:
         enter_time = visit.entered_at
         visiter_name = visit.passcard.owner_name
-        time_spent = get_duration(enter_time)
-        time_spent_minutes = time_spent.total_seconds() // 60
-
+        time_spent = get_duration(visit)
         non_closed_visits.append(
             {
                 'who_entered': visiter_name,
                 'entered_at': enter_time,
                 'duration': format_duration(time_spent),
-                'is_strange': is_strange(time_spent_minutes)
+                'is_strange': is_strange(time_spent)
             }
         )
     context = {

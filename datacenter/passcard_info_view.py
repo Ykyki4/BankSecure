@@ -10,16 +10,13 @@ def passcard_info_view(request, passcode):
 
     this_passcard_visits = []
     for visit in all_visits:
-        if visit.leaved_at is not None:
-            time_spent = get_duration(visit.entered_at, visit.leaved_at)
+        time_spent = get_duration(visit)
         duration = format_duration(time_spent)
-        time_spent_minutes = time_spent.total_seconds() // 60
-
         this_passcard_visits.append(
             {
                 'entered_at': visit.entered_at,
                 'duration': duration,
-                'is_strange': is_strange(time_spent_minutes)
+                'is_strange': is_strange(time_spent)
             }
         )
     context = {
