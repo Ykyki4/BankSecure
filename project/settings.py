@@ -4,21 +4,21 @@ import dj_database_url
 
 env = Env()
 env.read_env()
-
-DATABASES = {
-    'default': dj_database_url.config(default=f"{env('DB_ENGINE')}://{env('DB_USER')}:{env('DB_PASSWORD')}"
-                                              f"@{env('DB_HOST')}:{env('DB_PORT')}/{env('DB_NAME')}")
-}
+with env.prefixed("DB_"):
+    DATABASES = {
+        'default': dj_database_url.config(default=f"{env('ENGINE')}://{env('USER')}:{env('PASSWORD')}"
+                                                  f"@{env('HOST')}:{env('PORT')}/{env('NAME')}")
+    }
 
 INSTALLED_APPS = ['datacenter']
 
 SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = env.bool('DEBUG')
+DEBUG = env.bool('DEBUG', default=False)
 
 ROOT_URLCONF = 'project.urls'
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost'])
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
